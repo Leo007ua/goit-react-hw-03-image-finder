@@ -36,7 +36,33 @@ export class App extends Component {
       }
     }
   }
+
+  fetchLoadMore = async () => {
+    this.setState(prevState => ({ page: prevState.page + 1}))
+  };
+
+  onSubmit = pictureName => {
+    this.setState({
+      pictureName,
+      page: 1,
+    })
+  };
+  
+  onOpenModal = data => this.setState({ modal: {isOpen: true, modalData: data}});
+
+  onCloseModal = data => this.setState({ modal: {isOpen: false, modalData: null}});
+
   render() {
-    return <div>App</div>;
+    const {
+      responcedPhotos,
+      isLoading,
+      error,
+      modal: {isOpen, modalData}
+    } = this.state;
+    return (
+      <>
+    
+      </>
+      )
   }
 }
