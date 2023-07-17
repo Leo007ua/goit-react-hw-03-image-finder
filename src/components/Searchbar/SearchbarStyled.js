@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Icon from './Icon.png'
 
 export const SearchbarStyled = styled.header`
 top: 0;
@@ -33,7 +34,7 @@ button {
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
+  background-image: url(${Icon});
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;

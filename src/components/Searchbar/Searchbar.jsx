@@ -1,45 +1,43 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { Component } from 'react';
 import { SearchbarStyled } from './SearchbarStyled';
 
-class Searchbar extends Component {
+class SearchBar extends Component {
   state = {
     pictureName: '',
   };
 
-  handleOnChange = event => {
+  handleOnChange = evt => {
     this.setState({
-      pictureName: event.target.value,
+      pictureName: evt.target.value,
     });
   };
+  formOnSubmit = evt => {
+    evt.preventDefault();
+    this.props.onSubmit(this.state.pictureName);
+    this.resetForm(evt);
+  }
 
-  formOnSubmit = event => {
-    event.preventDefault();
-    this.props.OnSubmit(this.state.pictureName);
-    this.resetForm(event);
-  };
-
-  resetForm = event => {
-    event.target.reset();
-    this.setState({ pictureName: '' });
-  };
-
+  resetForm = evt => {
+    evt.target.reset();
+    this.setState({pictureName: ''})
+  }
   render() {
     return (
       <SearchbarStyled className="searchbar">
-        <form className="form">
+        <form className="form" onSubmit={this.formOnSubmit}>
           <button type="submit" className="button">
             <span className="button-label">Search</span>
           </button>
 
           <input
-            name= "pictureName"
+            name="pictureName"
             className="input"
             type="text"
-            autocomplete="off"
-            autofocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleOnChange}
+            onChange = {this.handleOnChange}
           />
         </form>
       </SearchbarStyled>
@@ -47,8 +45,9 @@ class Searchbar extends Component {
   }
 }
 
-Searchbar.propTypes = {
-    onSubmit: PropTypes.func.isRequired
+SearchBar.propsTypes = {
+  onSubmit: PropTypes.func.isRequired,
 }
 
-export default Searchbar;
+
+export default SearchBar;

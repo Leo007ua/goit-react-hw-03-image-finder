@@ -1,28 +1,29 @@
-import PropTypes from 'prop-types';
-import { ImgeGalleryStyledUl } from './ImageGalleryStyled';
+import PropTypes from 'prop-types'
+import { ImgGalleryStyledUl } from './ImageGalleryStyled';
 import ImageGalleryItem from 'components/ImageGalleryItem /ImageGalleryItem';
 
-function ImageGallery({ responcedPhotos, onOpenModal }) {
+function ImageGallery({ responcedPhotos, onOpenModal }) {    
   return (
-    <ImgeGalleryStyledUl>
-      {responcedPhotos.map(({ id, webformatURL, largetImageURL, tags }) => {
+    <ImgGalleryStyledUl>
+      {responcedPhotos.map(({ id, tags, webformatURL, largeImageURL }) => {
         return (
           <ImageGalleryItem
             key={id}
             id={id}
             tags={tags}
             webformatURL={webformatURL}
-            largetImageURL={largetImageURL}
+            largeImageURL={largeImageURL}
             onOpenModal={onOpenModal}
           />
         );
       })}
-    </ImgeGalleryStyledUl>
+    </ImgGalleryStyledUl>
   );
 }
 
 ImageGallery.propTypes = {
-  responcedPhotos: PropTypes.array,
-  onOpenModal: PropTypes.func,
-};
+  responcedImages: PropTypes.array,
+  onOpenModal: PropTypes.func
+}
+
 export default ImageGallery;

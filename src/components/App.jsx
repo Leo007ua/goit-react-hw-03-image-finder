@@ -1,5 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { requestPhotos } from 'services/api';
+import { WraperStyled } from './WraperStyled';
+import SearchBar from './Searchbar/Searchbar';
+import Loader from './Loader/Loader';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
+import Modal from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -12,16 +18,16 @@ export class App extends Component {
     modal: { isOpen: false, modalData: null },
   };
 
-  async componentDidMount(_, prevState) {
+  async componentDidUpdate(_, prevState) {
     const { pictureName, page } = this.state;
     if (
-      this.state.pictureName !== prevState.pictureName ??
+      this.state.pictureName !== prevState.pictureName ||
       this.state.page !== prevState.page
     ) {
       try {
         this.setState({ isLoading: true });
         const responcedPhotos = await requestPhotos(pictureName, page);
-        console.log(requestPhotos);
+        // console.log(requestPhotos);
         this.setState({
           totalPictures: responcedPhotos.totalHits,
           responcedPhotos:
@@ -43,7 +49,7 @@ export class App extends Component {
 
   onSubmit = pictureName => {
     this.setState({
-      pictureName,
+      pictureName: pictureName,
       page: 1,
     })
   };
@@ -61,7 +67,22 @@ export class App extends Component {
     } = this.state;
     return (
       <>
-    
+    <WraperStyled>
+      <SearchBar onSubmit={this.onSubmit}/>
+      {isLoading && <Loader/>}
+      {error && <>Oops... Error: { error }</>}
+      {responcedPhotos?.length > 0 && (
+        <ImageGallery responcedPhotos={responcedPhotos}
+        onOpenModal={this.onOpenModal}/>
+      )}
+
+      {responcedPhotos.length > 0 && responcedPhotos.length < this.state.totalPictures && (
+        <Button fetchLoadMore={this.fetchLoadMore} />
+      )}
+      {isOpen && (
+        <Modal onCloseModal={this.onCloseModal} modalData={modalData}/>
+      )}
+    </WraperStyled>
       </>
       )
   }
