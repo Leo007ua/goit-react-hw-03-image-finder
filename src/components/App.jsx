@@ -44,46 +44,51 @@ export class App extends Component {
   }
 
   fetchLoadMore = async () => {
-    this.setState(prevState => ({ page: prevState.page + 1}))
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   onSubmit = pictureName => {
     this.setState({
       pictureName: pictureName,
       page: 1,
-    })
+    });
   };
-  
-  onOpenModal = data => this.setState({ modal: {isOpen: true, modalData: data}});
 
-  onCloseModal = data => this.setState({ modal: {isOpen: false, modalData: null}});
+  onOpenModal = data =>
+    this.setState({ modal: { isOpen: true, modalData: data } });
+
+  onCloseModal = data =>
+    this.setState({ modal: { isOpen: false, modalData: null } });
 
   render() {
     const {
       responcedPhotos,
       isLoading,
       error,
-      modal: {isOpen, modalData}
+      modal: { isOpen, modalData },
     } = this.state;
     return (
       <>
-    <WraperStyled>
-      <SearchBar onSubmit={this.onSubmit}/>
-      {isLoading && <Loader/>}
-      {error && <>Oops... Error: { error }</>}
-      {responcedPhotos?.length > 0 && (
-        <ImageGallery responcedPhotos={responcedPhotos}
-        onOpenModal={this.onOpenModal}/>
-      )}
+        <WraperStyled>
+          <SearchBar onSubmit={this.onSubmit} />
+          {isLoading && <Loader />}
+          {error && <>Oops... Error: {error}</>}
+          {responcedPhotos?.length > 0 && (
+            <ImageGallery
+              responcedPhotos={responcedPhotos}
+              onOpenModal={this.onOpenModal}
+            />
+          )}
 
-      {responcedPhotos.length > 0 && responcedPhotos.length < this.state.totalPictures && (
-        <Button fetchLoadMore={this.fetchLoadMore} />
-      )}
-      {isOpen && (
-        <Modal onCloseModal={this.onCloseModal} modalData={modalData}/>
-      )}
-    </WraperStyled>
+          {responcedPhotos.length > 0 &&
+            responcedPhotos.length < this.state.totalPictures && (
+              <Button fetchLoadMore={this.fetchLoadMore} />
+            )}
+          {isOpen && (
+            <Modal onCloseModal={this.onCloseModal} modalData={modalData} />
+          )}
+        </WraperStyled>
       </>
-      )
+    );
   }
 }
